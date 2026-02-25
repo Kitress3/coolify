@@ -6,7 +6,7 @@
 
 services:
   openreplay-postgresql:
-    image: ghcr.io/openreplay/postgres:${POSTGRES_VERSION:-16}
+    image: ghcr.io/openreplay/postgres:latest
     container_name: openreplay-postgres
     volumes:
       - openreplay-pgdata:/bitnami/postgresql
@@ -14,7 +14,7 @@ services:
       POSTGRES_PASSWORD: ${OPENREPLAY_COMMON_PG_PASSWORD:-$SERVICE_PASSWORD_64_OPENREPLAY}
 
   openreplay-clickhouse:
-    image: clickhouse/clickhouse-server:${CLICKHOUSE_VERSION:-24.1}
+    image: clickhouse/clickhouse-server:latest
     container_name: openreplay-clickhouse
     volumes:
       - openreplay-clickhouse:/var/lib/clickhouse
@@ -24,7 +24,7 @@ services:
       CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: "1"
 
   openreplay-redis:
-    image: ghcr.io/openreplay/valkey:${REDIS_VERSION:-7}
+    image: ghcr.io/openreplay/valkey:latest
     container_name: openreplay-redis
     volumes:
       - openreplay-redisdata:/bitnami/redis/data
@@ -32,7 +32,7 @@ services:
       ALLOW_EMPTY_PASSWORD: "yes"
 
   openreplay-minio:
-    image: ghcr.io/openreplay/minio:${MINIO_VERSION:-2024-01-16}
+    image: ghcr.io/openreplay/minio:latest
     container_name: openreplay-minio
     volumes:
       - openreplay-miniodata:/bitnami/minio/data
@@ -41,7 +41,7 @@ services:
       MINIO_ROOT_PASSWORD: ${OPENREPLAY_COMMON_S3_SECRET:-$SERVICE_PASSWORD_OPENREPLAY}
 
   openreplay-api:
-    image: public.ecr.aws/p1t3u8a3/api:${OPENREPLAY_VERSION:-latest}
+    image: public.ecr.aws/p1t3u8a3/api:latest
     container_name: openreplay-api
     depends_on:
       - openreplay-postgresql
@@ -54,7 +54,7 @@ services:
     restart: unless-stopped
 
   openreplay-http:
-    image: public.ecr.aws/p1t3u8a3/http:${OPENREPLAY_VERSION:-latest}
+    image: public.ecr.aws/p1t3u8a3/http:latest
     container_name: openreplay-http
     depends_on:
       - openreplay-api
